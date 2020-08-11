@@ -1,11 +1,14 @@
-import React, {useState, useEffect } from 'react';
+import React from 'react';
+import { StartContext } from '../../context';
 import { ListItem, List, ListItemText } from '@material-ui/core';
 
 class AlbumList extends React.Component {
+    static contextType = StartContext;
+
     renderAlbums() {
         return (
             <List>
-                {this.props.albums.map((album) => 
+                {this.context.albums.map((album) => 
                     this.renderAlbum(album)
                 )}
             </List>

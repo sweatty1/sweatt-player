@@ -1,11 +1,14 @@
-import React, {useState, useEffect } from 'react';
+import React from 'react';
+import { StartContext } from '../../context';
 import { ListItem, List, ListItemText } from '@material-ui/core';
 
 class ArtistList extends React.Component {
+    static contextType = StartContext;
+
     renderArtists() {
         return (
             <List>
-                {this.props.artists.map((artist) => 
+                {this.context.artists.map((artist) => 
                     this.renderArtist(artist)
                 )}
             </List>
@@ -21,7 +24,7 @@ class ArtistList extends React.Component {
     }
 
     render() {
-        console.log(this.props.artists)
+        console.log("FUCKHELL");
         return (
             <div>
               <h1>Artists</h1>

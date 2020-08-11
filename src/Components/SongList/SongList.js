@@ -1,13 +1,9 @@
-import React, {useState, useEffect } from 'react';
+import React from 'react';
+import { StartContext } from '../../context';
 import { ListItem, List, ListItemText } from '@material-ui/core';
 
 class SongList extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            song: null
-        }
-    }
+    static contextType = StartContext;
 
     handleClickSelectSong = (event, song) => {
         //setSelectedSong(song); figure out to set thing or to play music
@@ -17,7 +13,7 @@ class SongList extends React.Component {
     renderSongs() {
         return (
             <List className="list-group">
-                {this.props.songs.map((song) => 
+                {this.context.songs.map((song) => 
                     this.renderSong(song)
                 )}
             </List>
