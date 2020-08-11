@@ -1,9 +1,9 @@
 import React from 'react';
-import { StartContext } from '../../context';
+import { MusicInfoContext } from '../../Contexts/MusicInfoContext';
 import { ListItem, List, ListItemText } from '@material-ui/core';
 
 class SongList extends React.Component {
-    static contextType = StartContext;
+    static contextType = MusicInfoContext;
 
     handleClickSelectSong = (event, song) => {
         //setSelectedSong(song); figure out to set thing or to play music

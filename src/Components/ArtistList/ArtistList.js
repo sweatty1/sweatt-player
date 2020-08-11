@@ -1,9 +1,9 @@
 import React from 'react';
-import { StartContext } from '../../context';
+import { MusicInfoContext } from '../../Contexts/MusicInfoContext';
 import { ListItem, List, ListItemText } from '@material-ui/core';
 
 class ArtistList extends React.Component {
-    static contextType = StartContext;
+    static contextType = MusicInfoContext;
 
     renderArtists() {
         return (
