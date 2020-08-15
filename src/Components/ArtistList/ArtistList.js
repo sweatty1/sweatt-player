@@ -17,14 +17,13 @@ class ArtistList extends React.Component {
 
     renderArtist(artist) {
         return(
-            <ListItem key={artist.id}>
-                <ListItemText primary={artist.name}/>
+            <ListItem>
+                <ListItemText primary={artist}/>
             </ListItem>
         )
     }
 
     render() {
-        console.log("FUCKHELL");
         return (
             <div>
               <h1>Artists</h1>

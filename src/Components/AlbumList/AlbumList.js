@@ -18,7 +18,7 @@ class AlbumList extends React.Component {
     renderAlbum(album) {
         return(
             <ListItem>
-                <ListItemText primary={album.name}/>
+                <ListItemText primary={album}/>
             </ListItem>
         )
     }
