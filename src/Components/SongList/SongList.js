@@ -1,22 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { MusicInfoContext } from '../../Contexts/MusicInfoContext';
 import { ListItem, List, ListItemText, ListItemSecondaryAction } from '@material-ui/core';
 
 class SongList extends React.Component {
     static contextType = MusicInfoContext;
-
-    handleClickSelectSong = (event, song) => {
-        //setSelectedSong(song); figure out to set thing or to play music
-        // selected={selectedSong === song} needs to be added to listItem
-    };
-
+    
     renderSongs() {
         return (
-            <List className="list-group">
-                {this.context.songs.map((song) => 
-                    this.renderSong(song)
+            <MusicInfoContext.Consumer>
+                {({songs, setCurrentlyPlaying}) => (
+                    <List className="list-group">
+                    {songs.map((song) => 
+                        this.renderSong(song, setCurrentlyPlaying)
+                    )}
+                    </List>
                 )}
-            </List>
+            </MusicInfoContext.Consumer>
         )
     }
 
@@ -39,9 +38,9 @@ class SongList extends React.Component {
         )
     }
 
-    renderSong(song) {
+    renderSong(song, setCurrentlyPlaying) {
         return(
-            <ListItem button onClick={(event) => this.handleClickSelectSong(event, song)}>
+            <ListItem button onClick={(event) => setCurrentlyPlaying(song)}>
                 <ListItemText primary={song.songInfo.common.title}/>
                 <ListItemSecondaryAction> 
                     {this.renderTime(song.songInfo.format.duration)}

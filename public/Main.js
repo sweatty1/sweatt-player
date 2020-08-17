@@ -5,7 +5,8 @@ const path = require('path')
 
 function createWindow() {
     // create the browser window
-    win = new BrowserWindow({width: 800, height: 600, webPreferences: { nodeIntegration: true }});
+    win = new BrowserWindow({webPreferences: { nodeIntegration: true }});
+    win.maximize();
     // win = new BrowserWindow({width: 800, height: 600, frame: false}); // causes no chrome file,view, exit header and outline bars
     // and load the index.html of the app
     win.webContents.openDevTools(); // load dev tools only for deveopment environment

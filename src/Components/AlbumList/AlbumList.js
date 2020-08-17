@@ -7,11 +7,15 @@ class AlbumList extends React.Component {
 
     renderAlbums() {
         return (
-            <List>
-                {this.context.albums.map((album) => 
-                    this.renderAlbum(album)
+            <MusicInfoContext.Consumer>
+                {({albums}) => (
+                    <List>
+                        {albums.map((album) => 
+                            this.renderAlbum(album)
+                        )}
+                    </List>
                 )}
-            </List>
+            </MusicInfoContext.Consumer>
         )
     }
 

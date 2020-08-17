@@ -7,11 +7,15 @@ class ArtistList extends React.Component {
 
     renderArtists() {
         return (
-            <List>
-                {this.context.artists.map((artist) => 
-                    this.renderArtist(artist)
+            <MusicInfoContext.Consumer>
+                {({artists}) => (
+                    <List>
+                    {artists.map((artist) => 
+                        this.renderArtist(artist)
+                    )}
+                </List>
                 )}
-            </List>
+            </MusicInfoContext.Consumer>
         )
     }
 
