@@ -40,13 +40,26 @@ class App extends React.Component {
 
     this.setCurrentlyPlaying = (song) => {
       let currentlyPlaying = this.state.currentlyPlaying
+      if(currentlyPlaying.audio !== null) {
+        // make sure to stop old audio
+        currentlyPlaying.audio.pause();
+      }
+      currentlyPlaying.playTime = 0;
+      currentlyPlaying.isPlaying = false;
+      
+      // now new audio and data gets setup
       currentlyPlaying.songData = song.songInfo;
       currentlyPlaying.audio = new Audio(song.fileLocation);
       this.setState({currentlyPlaying});
     };
-    this.toggleCurrentlyPlaying = () => {
+    this.togglePlayingAndAudio = () => {
       let updatedCurrentlyPlaying = this.state.currentlyPlaying;
-      updatedCurrentlyPlaying.isPlaying = !updatedCurrentlyPlaying.isPlaying;
+      if(updatedCurrentlyPlaying.audio.paused) {
+        updatedCurrentlyPlaying.audio.play();
+      } else {
+        updatedCurrentlyPlaying.audio.pause();
+      }
+      updatedCurrentlyPlaying.isPlaying = !updatedCurrentlyPlaying.audio.paused;
       this.setState(state => ({
         currentlyPlaying: updatedCurrentlyPlaying
       }));
@@ -62,11 +75,12 @@ class App extends React.Component {
     // Could cut out this stange object assign if I just recreate new objects
     let currentlyPlayingState = BaseCurrentlyPlayingState; //what populates the value will use the default on createContext otherwise but only if no value is
     currentlyPlayingState.setCurrentlyPlaying = this.setCurrentlyPlaying;
-    currentlyPlayingState.toggleCurrentlyPlaying = this.toggleCurrentlyPlaying;
+    currentlyPlayingState.togglePlayingAndAudio = this.togglePlayingAndAudio;
+    currentlyPlayingState.setPlayTime = this.setPlayTime;
     this.state = {musicInfo: BaseMusicInfoState, currentlyPlaying: currentlyPlayingState};
   }
 
-  handleSetBaseFolderForMusic = (event) => {
+  handleSetBaseFolderForMusic = () => {
     dialog.showOpenDialog({ title: "Select Music Folder", properties: ['openDirectory']}).then((data) => {
       if (data.filePaths && data.filePaths[0] != undefined) {
         const folder = data.filePaths[0];
@@ -85,23 +99,28 @@ class App extends React.Component {
     });  
   };
 
-  handleClearingMusic = (event) => {
-    let musicInfo = this.state.musicInfo;
-    musicInfo.artists = [];
-    musicInfo.albums = [];
-    musicInfo.songs = [];
-    musicInfo.musicFolder = 'No Folder';
+  handleClearSelectedMusic = () => {
     let currentlyPlaying = this.state.currentlyPlaying;
     currentlyPlaying.songData = null;
     currentlyPlaying.audio = null;
     currentlyPlaying.playTime = 0;
     currentlyPlaying.isPlaying = false;
     // manually resetting this allow for not having to reset the toggle / set functions
-    this.setState({musicInfo, currentlyPlaying})
+    this.setState({currentlyPlaying})
+  }
+
+  handleClearingAllMusic = () => {
+    this.handleClearSelectedMusic();
+    let musicInfo = this.state.musicInfo;
+    musicInfo.artists = [];
+    musicInfo.albums = [];
+    musicInfo.songs = [];
+    musicInfo.musicFolder = 'No Folder';
+    this.setState({musicInfo})
   }
 
   render() {
-    const { classes, currentlyPlaying } = this.props;
+    const { classes } = this.props;
       return (
         <MusicInfoContext.Provider value={this.state.musicInfo}>
           <div className="App">
@@ -111,11 +130,11 @@ class App extends React.Component {
                     <p>{musicFolder}</p>
                 )}
               </MusicInfoContext.Consumer>
-              <Button variant="contained" color="primary" onClick={(event) => this.handleSetBaseFolderForMusic(event)}>button to set file to look at music</Button>
+              <Button variant="contained" color="primary" onClick={(event) => this.handleSetBaseFolderForMusic()}>button to set file to look at music</Button>
               <br/>
-              <Button variant="contained">button to reeset music selection</Button>
+              <Button variant="contained" onClick={(event) => this.handleClearSelectedMusic()}>button to reeset selected Song</Button>
               <br/>
-              <Button variant="contained" color="secondary" onClick={(event) => this.handleClearingMusic(event)}>Empty the state Store</Button>
+              <Button variant="contained" color="secondary" onClick={(event) => this.handleClearingAllMusic()}>Empty the state Store</Button>
               <br/>
             </header>
             <body className="App-body">
