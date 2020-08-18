@@ -142,7 +142,6 @@ class App extends React.Component {
   }
 }
 
-
 // then add the styling
 App = withStyles(styles)(App);
 

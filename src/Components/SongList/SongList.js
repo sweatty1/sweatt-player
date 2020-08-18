@@ -1,24 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { MusicInfoContext } from '../../Contexts/MusicInfoContext';
 import { CurrentlyPlayingContext } from '../../Contexts/CurrentlyPlayingContext';
 import { ListItem, List, ListItemText, ListItemSecondaryAction } from '@material-ui/core';
 import { RenderTime } from '../../Utilities/TimeHandling';
 
 class SongList extends React.Component {
-    
-    renderSongs() {
-        return (
-            <MusicInfoContext.Consumer>
-                {({songs}) => (
-                    <List className="list-group">
-                    {songs.map((song) => 
-                        this.renderSong(song)
-                    )}
-                    </List>
-                )}
-            </MusicInfoContext.Consumer>
-        )
-    }
 
     renderSong(song) {
         return(
@@ -37,10 +23,18 @@ class SongList extends React.Component {
 
     render() {
         return (
-          <div>
-              <h1>Songs</h1>
-              {this.renderSongs()}
-          </div>
+            <MusicInfoContext.Consumer>
+                {({songs}) => (
+                    <div>
+                        <h1>Songs</h1>
+                        <List className="list-group">
+                            {songs.map((song) => 
+                                this.renderSong(song)
+                            )}
+                        </List>
+                    </div>
+                )}
+            </MusicInfoContext.Consumer>
         );
     }
 }

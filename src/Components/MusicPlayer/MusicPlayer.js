@@ -4,6 +4,9 @@ import { CurrentlyPlayingContext } from '../../Contexts/CurrentlyPlayingContext'
 import { RenderTime } from '../../Utilities/TimeHandling';
 
 class MusicPlayer extends React.Component {
+    // react useContext is for functional component only
+    //  this is class components access to providers above via this line and this.context
+    static contextType = CurrentlyPlayingContext;
     
     togglePlaySong(event, songAudio, toggleCurrentlyPlaying) {
         if(songAudio.paused) {
@@ -11,44 +14,32 @@ class MusicPlayer extends React.Component {
         } else {
             songAudio.pause();
         }
-        //READD THIS ELI TO UPDATE THE PAUSE AND PLAYH BUTTON
         toggleCurrentlyPlaying();
     }
 
-    playOrPause(songAudio) {
+    playOrPause() {
         return(
             <CurrentlyPlayingContext.Consumer>
-                {({isPlaying, toggleCurrentlyPlaying}) => (
-                    <Button variant="contained" color="primary" onClick={(event) => this.togglePlaySong(event, songAudio, toggleCurrentlyPlaying)}>{isPlaying ? "Pause" : "Play" }</Button>
+                {({isPlaying, toggleCurrentlyPlaying, audio}) => (
+                    <Button variant="contained" color="primary" onClick={(event) => this.togglePlaySong(event, audio, toggleCurrentlyPlaying)}>{isPlaying ? "Pause" : "Play" }</Button>
                 )}
             </CurrentlyPlayingContext.Consumer>
         );
     }
 
-    renderMusic(currentSongData, songAudio) {
-        if(currentSongData === null || currentSongData === undefined){
+    render() {
+        const currentlyPlayingContext = this.context;
+        if(currentlyPlayingContext.songData === null || currentlyPlayingContext.songData === undefined){
             return(<h1>No Song Selected</h1>);
         }
         // could use songAudio.duration but it starts out as NAN
         return (
             <span>
-                <span>{currentSongData.common.title} </span>
-                <span>{RenderTime(songAudio.currentTime)} / {RenderTime(currentSongData.format.duration)}</span>
-                <span>  {this.playOrPause(songAudio)}</span>
+                <span>{currentlyPlayingContext.songData.common.title} </span>
+                <span>{RenderTime(currentlyPlayingContext.audio.currentTime)} / {RenderTime(currentlyPlayingContext.songData.format.duration)}</span>
+                <span>  {this.playOrPause()}</span>
             </span>
         )
-    }
-
-    render() {
-        return (
-        <CurrentlyPlayingContext.Consumer>
-            {({songData, audio}) => (
-                <div>
-                    {this.renderMusic(songData, audio)}
-                </div>
-            )}
-        </CurrentlyPlayingContext.Consumer>
-        );
     }
 }
 export default MusicPlayer;

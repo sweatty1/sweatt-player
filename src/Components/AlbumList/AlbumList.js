@@ -3,21 +3,6 @@ import { MusicInfoContext } from '../../Contexts/MusicInfoContext';
 import { ListItem, List, ListItemText } from '@material-ui/core';
 
 class AlbumList extends React.Component {
-    static contextType = MusicInfoContext;
-
-    renderAlbums() {
-        return (
-            <MusicInfoContext.Consumer>
-                {({albums}) => (
-                    <List>
-                        {albums.map((album) => 
-                            this.renderAlbum(album)
-                        )}
-                    </List>
-                )}
-            </MusicInfoContext.Consumer>
-        )
-    }
 
     renderAlbum(album) {
         return(
@@ -29,10 +14,18 @@ class AlbumList extends React.Component {
 
     render() {
         return (
-            <div>
-              <h1>Albums</h1>
-              {this.renderAlbums()}
-            </div>
+            <MusicInfoContext.Consumer>
+                {({albums}) => (
+                    <div>
+                        <h1>Albums</h1>
+                        <List>
+                            {albums.map((album) => 
+                                this.renderAlbum(album)
+                            )}
+                        </List>
+                    </div>
+                )}
+            </MusicInfoContext.Consumer>
         );
     }
 }
