@@ -36,7 +36,7 @@ class MusicPlayer extends React.Component {
         return (
             <span>
                 <span>{currentlyPlayingContext.songData.common.title} </span>
-                <span>{RenderTime(currentlyPlayingContext.audio.currentTime)} / {RenderTime(currentlyPlayingContext.songData.format.duration)}</span>
+                <span>{RenderTime(currentlyPlayingContext.playTime)} / {RenderTime(currentlyPlayingContext.songData.format.duration)}</span>
                 <span>  {this.playOrPause()}</span>
             </span>
         )

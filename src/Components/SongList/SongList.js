@@ -4,38 +4,31 @@ import { CurrentlyPlayingContext } from '../../Contexts/CurrentlyPlayingContext'
 import { ListItem, List, ListItemText, ListItemSecondaryAction } from '@material-ui/core';
 import { RenderTime } from '../../Utilities/TimeHandling';
 
-class SongList extends React.Component {
+const SongList = (props) => {
 
-    renderSong(song) {
-        return(
-            <CurrentlyPlayingContext.Consumer>
-                {({setCurrentlyPlaying}) => (
-                    <ListItem button onClick={(event) => setCurrentlyPlaying(song)}>
-                        <ListItemText primary={song.songInfo.common.title}/>
-                        <ListItemSecondaryAction> 
-                            <ListItemText primary={RenderTime(song.songInfo.format.duration)}/>
-                        </ListItemSecondaryAction>
-                    </ListItem>
-                )}
-            </CurrentlyPlayingContext.Consumer>
-        )
-    }
-
-    render() {
-        return (
-            <MusicInfoContext.Consumer>
-                {({songs}) => (
-                    <div>
+    return (
+        <MusicInfoContext.Consumer>
+            {({songs}) => (
+                <CurrentlyPlayingContext.Consumer>
+                    {({setCurrentlyPlaying}) => (
+                        <div>
                         <h1>Songs</h1>
                         <List className="list-group">
                             {songs.map((song) => 
-                                this.renderSong(song)
+                                <ListItem button onClick={(event) => setCurrentlyPlaying(song)}>
+                                    <ListItemText primary={song.songInfo.common.title}/>
+                                    <ListItemSecondaryAction> 
+                                        <ListItemText primary={RenderTime(song.songInfo.format.duration)}/>
+                                    </ListItemSecondaryAction>
+                                </ListItem>
                             )}
                         </List>
-                    </div>
-                )}
-            </MusicInfoContext.Consumer>
-        );
-    }
+                        </div>
+                    )}
+                </CurrentlyPlayingContext.Consumer>
+            )}
+        </MusicInfoContext.Consumer>
+    );
 }
+
 export default SongList;

@@ -49,9 +49,15 @@ class App extends React.Component {
       updatedCurrentlyPlaying.isPlaying = !updatedCurrentlyPlaying.isPlaying;
       this.setState(state => ({
         currentlyPlaying: updatedCurrentlyPlaying
-        //currentlyPlaying: {isPlaying: !(state.currentlyPlaying.isPlaying), audio: state.currentlyPlaying.audio, songData: state.currentlyPlaying}
       }));
     };
+    this.setPlayTime = () => {
+      let currentlyPlaying = this.state.currentlyPlaying
+      // currentlyPlaying.playTime = this.state.currentlyPlaying.audio.currentTime
+      // or should i do my own tick
+      currentlyPlaying.playTime = this.state.currentlyPlaying.audio.currentTime
+      this.setState({currentlyPlaying});
+    }
 
     // Could cut out this stange object assign if I just recreate new objects
     let currentlyPlayingState = BaseCurrentlyPlayingState; //what populates the value will use the default on createContext otherwise but only if no value is
