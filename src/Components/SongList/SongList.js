@@ -1,17 +1,18 @@
 import React, { useContext } from 'react';
 import { MusicInfoContext } from '../../Contexts/MusicInfoContext';
+import { CurrentlyPlayingContext } from '../../Contexts/CurrentlyPlayingContext';
 import { ListItem, List, ListItemText, ListItemSecondaryAction } from '@material-ui/core';
+import { RenderTime } from '../../Utilities/TimeHandling';
 
 class SongList extends React.Component {
-    static contextType = MusicInfoContext;
     
     renderSongs() {
         return (
             <MusicInfoContext.Consumer>
-                {({songs, setCurrentlyPlaying}) => (
+                {({songs}) => (
                     <List className="list-group">
                     {songs.map((song) => 
-                        this.renderSong(song, setCurrentlyPlaying)
+                        this.renderSong(song)
                     )}
                     </List>
                 )}
@@ -19,33 +20,18 @@ class SongList extends React.Component {
         )
     }
 
-    // move this into its own component for use with music player
-    // Make it use a proper date time
-    renderTime(duration) {
-        let hours = Math.floor(duration / 3600);
-        let timeAfterHour = duration - hours * 3600;
-        let minutes = Math.floor(timeAfterHour/60);
-        let seconds = Math.floor(timeAfterHour - minutes * 60);
-        if (minutes < 10) {minutes = "0"+minutes;}
-        if (seconds < 10) {seconds = "0"+seconds;}
-        let textFormat = minutes+':'+seconds;
-        if (hours > 0) {
-            if (hours   < 10) {hours = "0"+hours;}
-            textFormat = hours+':'+textFormat
-        }
-        return (
-            <ListItemText primary={textFormat}/>
-        )
-    }
-
-    renderSong(song, setCurrentlyPlaying) {
+    renderSong(song) {
         return(
-            <ListItem button onClick={(event) => setCurrentlyPlaying(song)}>
-                <ListItemText primary={song.songInfo.common.title}/>
-                <ListItemSecondaryAction> 
-                    {this.renderTime(song.songInfo.format.duration)}
-                </ListItemSecondaryAction>
-            </ListItem>
+            <CurrentlyPlayingContext.Consumer>
+                {({setCurrentlyPlaying}) => (
+                    <ListItem button onClick={(event) => setCurrentlyPlaying(song)}>
+                        <ListItemText primary={song.songInfo.common.title}/>
+                        <ListItemSecondaryAction> 
+                            <ListItemText primary={RenderTime(song.songInfo.format.duration)}/>
+                        </ListItemSecondaryAction>
+                    </ListItem>
+                )}
+            </CurrentlyPlayingContext.Consumer>
         )
     }
 
