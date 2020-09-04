@@ -1,18 +1,25 @@
 // This is for running electron version of the application
 const {app, BrowserWindow} = require('electron');
 
-const path = require('path')
+const path = require('path');
+const isDev = require('electron-is-dev');
+if (isDev) {
+    require('electron-reload');
+}
 
 function createWindow() {
     // create the browser window
-    win = new BrowserWindow({webPreferences: { nodeIntegration: true }});
-    win.maximize();
-    // win = new BrowserWindow({width: 800, height: 600, frame: false}); // causes no chrome file,view, exit header and outline bars
-    // and load the index.html of the app
-    win.webContents.openDevTools(); // load dev tools only for deveopment environment
-    // win.loadFile('index.html'); // will load the html page
-    // win.loadURL('http://localhost:3000/') // will load what is being displayed to localhost:3000
-    win.loadURL(`file://${path.join(__dirname, '../build/index.html')}`);
+    mainWin = new BrowserWindow({webPreferences: { nodeIntegration: true }}); // add frame: false no outline
+    mainWin.maximize();
+    if(isDev) {
+        mainWin.webContents.openDevTools(); // load dev tools only for deveopment environment
+    }
+
+    mainWin.loadURL(
+        isDev
+            ? 'http://localhost:3000'
+            : `file://${path.join(__dirname, '../build/index.html')}`,
+    )
 }
 
 app.on('ready', createWindow);
