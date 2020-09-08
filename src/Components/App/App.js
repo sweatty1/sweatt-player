@@ -1,24 +1,13 @@
 import React from 'react';
-import { Button, Grid, Paper }from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import { Button }from '@material-ui/core';
 import './App.css';
-import ArtistList from '../ArtistList/ArtistList';
-import SongList from '../SongList/SongList';
-import AlbumList from '../AlbumList/AlbumList';
-import MusicPlayer from '../MusicPlayer/MusicPlayer';
+import PlaylistAndMusicPlayer from '../PlaylistAndMusicPlayer/PlaylistAndMusicPlayer';
+import MusicInfoDisplay from '../MusicInfoDisplay/MusicInfoDisplay';
 import { MusicInfoContext } from '../../Contexts/MusicInfoContext';
 import { CurrentlyPlayingContext } from '../../Contexts/CurrentlyPlayingContext';
 import { MusicFolderReader } from '../../Utilities/MusicFolderReader';
 var remote = window.require('electron').remote;
 var { dialog } = remote;
-
-const styles = (theme) => ({
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-});
 
 const BaseMusicInfoState = {
   artists: [],
@@ -31,7 +20,8 @@ const BaseCurrentlyPlayingState = {
   songData: null,
   audio: null,
   playTime: 0,
-  isPlaying: false
+  isPlaying: false,
+  currentPlaylist: []
 };
 
 class App extends React.Component {
@@ -120,7 +110,6 @@ class App extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
       return (
         <MusicInfoContext.Provider value={this.state.musicInfo}>
           <div className="App">
@@ -139,35 +128,14 @@ class App extends React.Component {
             </header>
             <body className="App-body">
             <CurrentlyPlayingContext.Provider value = {this.state.currentlyPlaying}>
-                <Paper className={classes.paper}>
-                  <MusicPlayer/>
-                </Paper>  
-                <Grid container spacing={3}>
-                  <Grid item xs={4}>
-                    <Paper className={classes.paper}>
-                      <ArtistList/>
-                    </Paper>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Paper className={classes.paper}>
-                      <AlbumList/>
-                    </Paper>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Paper className={classes.paper}>
-                      <SongList/>
-                    </Paper>
-                  </Grid>
-                </Grid>
-              </CurrentlyPlayingContext.Provider>
+              <PlaylistAndMusicPlayer/>
+              <MusicInfoDisplay/>
+            </CurrentlyPlayingContext.Provider>
             </body>
           </div>
         </MusicInfoContext.Provider>
       );
   }
 }
-
-// then add the styling
-App = withStyles(styles)(App);
 
 export default App;

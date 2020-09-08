@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button }from '@material-ui/core';
 import { CurrentlyPlayingContext } from '../../Contexts/CurrentlyPlayingContext';
 import { RenderTime } from '../../Utilities/TimeHandling';
+import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
+import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
 
 // This could probably be a functional component
 // although might be good idea to have both types
@@ -34,7 +35,7 @@ class MusicPlayer extends React.Component {
         return(
             <CurrentlyPlayingContext.Consumer>
                 {({isPlaying, togglePlayingAndAudio}) => (
-                    <Button variant="contained" color="primary" onClick={(event) => togglePlayingAndAudio()}>{isPlaying ? "Pause" : "Play" }</Button>
+                    isPlaying ? <PauseCircleFilledIcon button onClick={(event) => togglePlayingAndAudio()}/> : <PlayCircleFilledIcon button onClick={(event) => togglePlayingAndAudio()}/>
                 )}
             </CurrentlyPlayingContext.Consumer>
         );
@@ -43,14 +44,16 @@ class MusicPlayer extends React.Component {
     render() {
         const currentlyPlayingContext = this.context;
         if(currentlyPlayingContext.songData === null){
-            return(<h1>No Song Selected</h1>);
+            return(<h3>No Song Selected</h3>);
         }
-        // could use songAudio.duration but it starts out as NAN
         return (
             <span>
-                <span>{currentlyPlayingContext.songData.common.title} </span>
-                <span>{RenderTime(currentlyPlayingContext.playTime)} / {RenderTime(currentlyPlayingContext.songData.format.duration)}</span>
-                <span>  {this.playOrPause()}</span>
+                <h3>Playing</h3>
+                <div style={{alignItems: 'center', display: 'flex'}}>
+                    {currentlyPlayingContext.songData.common.title}
+                    {RenderTime(currentlyPlayingContext.playTime)} / {RenderTime(currentlyPlayingContext.songData.format.duration)}
+                    {this.playOrPause()}
+                </div>
             </span>
         )
     }
