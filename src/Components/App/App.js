@@ -27,7 +27,7 @@ class App extends React.Component {
 
   handleSetBaseFolderForMusic = () => {
     dialog.showOpenDialog({ title: "Select Music Folder", properties: ['openDirectory']}).then((data) => {
-      if (data.filePaths && data.filePaths[0] != undefined) {
+      if (data.filePaths && data.filePaths[0] !== undefined) {
         const folder = data.filePaths[0];
         this.readMusicFolder(folder);
       } else {
@@ -61,12 +61,12 @@ class App extends React.Component {
               <Button variant="contained" color="secondary" onClick={(event) => this.handleClearAllMusic()}>Empty the state Store</Button>
               <br/>
             </header>
-            <body className="App-body">
+            <div className="App-body">
             <CurrentlyPlayingContext.Provider value = {this.state.currentlyPlaying}>
               <PlaylistAndMusicPlayer/>
               <MusicInfoDisplay/>
             </CurrentlyPlayingContext.Provider>
-            </body>
+            </div>
           </div>
         </MusicInfoContext.Provider>
       );

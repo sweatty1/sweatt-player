@@ -1,17 +1,10 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import { MusicInfoContext } from '../../Contexts/MusicInfoContext';
 import { CurrentlyPlayingContext } from '../../Contexts/CurrentlyPlayingContext';
-import { ListItem, List, ListItemText, ListItemSecondaryAction } from '@material-ui/core';
+import { ListItem, List, ListItemText, ListItemSecondaryAction, IconButton } from '@material-ui/core';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 
 const ArtistList = (props) => {
-    // In functional components additional functions cause rerendering
-    const memoizedHello = useCallback(
-        (artist) => {
-          console.log("hello " + artist)
-        }
-      );
-
     return (
         <div>
         <h1>Artists</h1>
@@ -20,11 +13,13 @@ const ArtistList = (props) => {
             {({addArtistToPlayList}) => (
                 <MusicInfoContext.Consumer>
                 {({artists}) => (
-                    artists.map((artist) => 
-                        <ListItem button onClick={(event) => memoizedHello(artist)}>
+                    artists.map((artist, index) => 
+                        <ListItem key={"Artist"+index}>
                             <ListItemText primary={artist}/>
                             <ListItemSecondaryAction> 
-                                <PlaylistAddIcon button onClick={(event) => addArtistToPlayList(artist)}/>
+                            <IconButton onClick={(event) => addArtistToPlayList(artist)}>
+                                <PlaylistAddIcon/>
+                            </IconButton>
                             </ListItemSecondaryAction>
                         </ListItem>
                     )

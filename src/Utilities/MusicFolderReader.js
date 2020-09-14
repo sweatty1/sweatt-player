@@ -31,7 +31,7 @@ function recursiveFolder(folder) {
 
         return Promise.all(songsInformationPromises).then((songs) => {
             // if we have subDirectories keep collecting
-            if (subDirectories.length == 0) {
+            if (subDirectories.length === 0) {
                 return songs;
             }
             let subDirectoriesSongsPromises = subDirectories.map(directory => {
