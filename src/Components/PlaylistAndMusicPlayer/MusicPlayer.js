@@ -3,6 +3,7 @@ import { CurrentlyPlayingContext } from '../../Contexts/CurrentlyPlayingContext'
 import { RenderTime } from '../../Utilities/TimeHandling';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
+import { IconButton } from '@material-ui/core';
 
 // This could probably be a functional component
 // although might be good idea to have both types
@@ -35,7 +36,8 @@ class MusicPlayer extends React.Component {
         return(
             <CurrentlyPlayingContext.Consumer>
                 {({isPlaying, togglePlayingAndAudio}) => (
-                    isPlaying ? <PauseCircleFilledIcon button onClick={(event) => togglePlayingAndAudio()}/> : <PlayCircleFilledIcon button onClick={(event) => togglePlayingAndAudio()}/>
+                    isPlaying ? <IconButton onClick={(event) => togglePlayingAndAudio()}><PauseCircleFilledIcon/></IconButton> :
+                    <IconButton onClick={(event) => togglePlayingAndAudio()}><PlayCircleFilledIcon/></IconButton>
                 )}
             </CurrentlyPlayingContext.Consumer>
         );

@@ -3,8 +3,8 @@ import { Button }from '@material-ui/core';
 import './App.css';
 import PlaylistAndMusicPlayer from '../PlaylistAndMusicPlayer/PlaylistAndMusicPlayer';
 import MusicInfoDisplay from '../MusicInfoDisplay/MusicInfoDisplay';
-import { MusicInfoContext, BaseMusicInfoState, readMusicFolder, clearSelectedMusic, clearAllMusic } from '../../Contexts/MusicInfoContext';
-import { CurrentlyPlayingContext, BaseCurrentlyPlayingState, setCurrentlyPlaying, togglePlayingAndAudio, setPlayTime } from '../../Contexts/CurrentlyPlayingContext';
+import { MusicInfoContext, BaseMusicInfoState, readMusicFolder, clearAllMusic } from '../../Contexts/MusicInfoContext';
+import { CurrentlyPlayingContext, BaseCurrentlyPlayingState, setCurrentlyPlaying, togglePlayingAndAudio, setPlayTime, addSongToPlayList, clearPlaylist, clearSelectedMusic, removeSongFromPlaylist } from '../../Contexts/CurrentlyPlayingContext';
 var { dialog } = window.require('electron').remote;
 
 class App extends React.Component {
@@ -16,11 +16,14 @@ class App extends React.Component {
     currentlyPlayingState.setCurrentlyPlaying = setCurrentlyPlaying.bind(this);
     currentlyPlayingState.togglePlayingAndAudio = togglePlayingAndAudio.bind(this);
     currentlyPlayingState.setPlayTime = setPlayTime.bind(this);
+    currentlyPlayingState.addSongToPlayList = addSongToPlayList.bind(this);
+    currentlyPlayingState.clearPlaylist = clearPlaylist.bind(this);
+    currentlyPlayingState.removeSongFromPlaylist = removeSongFromPlaylist.bind(this);
     
     // set up other bindings for musicInfoContext used in events
     this.readMusicFolder = readMusicFolder.bind(this);
+    this.clearLoadedMusic = clearAllMusic.bind(this);
     this.clearSelectedMusic = clearSelectedMusic.bind(this);
-    this.clearAllMusic = clearAllMusic.bind(this);
 
     this.state = {musicInfo: BaseMusicInfoState, currentlyPlaying: currentlyPlayingState};
   }
@@ -41,7 +44,8 @@ class App extends React.Component {
   }
 
   handleClearAllMusic = () => {
-    this.clearAllMusic();
+    this.clearSelectedMusic();
+    this.clearLoadedMusic();
   }
 
   render() {

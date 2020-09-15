@@ -16,7 +16,7 @@ const SongList = (props) => {
                 <MusicInfoContext.Consumer>
                 {({songs}) => (
                     songs.map((song, index) => 
-                        <ListItem key={"Song"+index} button onClick={(event) => setCurrentlyPlaying(song)}>
+                        <ListItem key={"Song"+index} button onClick={(event) => setCurrentlyPlaying(song, false)}>
                             <ListItemText primary={song.songInfo.common.title}/>
                             <ListItemSecondaryAction> 
                                 <ListItemText primary={RenderTime(song.songInfo.format.duration)}/>

@@ -21,6 +21,7 @@
     "electron-start": "cross-env NODE_ENV=dev nodemon --exec \"\"electron .\"\"",
     "preelectron-pack": "npm run react-build",
     "electron-pack": "electron-builder -c.extraMetadata.main=build/Main.js",
+    "old-electron-start": "electron .",
     "reat-with-browser-start": "react-scripts start",
     "react-build": "react-scripts build",
     "react-test": "react-scripts test",

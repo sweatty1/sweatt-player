@@ -22,18 +22,7 @@ export function readMusicFolder(folder) {
   });
 }
 
-export function clearSelectedMusic() {
-  let currentlyPlaying = this.state.currentlyPlaying;
-  currentlyPlaying.songData = null;
-  currentlyPlaying.audio = null;
-  currentlyPlaying.playTime = 0;
-  currentlyPlaying.isPlaying = false;
-  // manually resetting this allow for not having to reset the toggle / set functions
-  this.setState({currentlyPlaying});
-}
-
 export function clearAllMusic() {
-  this.clearSelectedMusic();
   let musicInfo = this.state.musicInfo;
   musicInfo.artists = [];
   musicInfo.albums = [];

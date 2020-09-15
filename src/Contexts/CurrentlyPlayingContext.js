@@ -8,21 +8,41 @@ export const BaseCurrentlyPlayingState = {
   audio: null,
   playTime: 0,
   isPlaying: false,
+  isPlayingFromPlaylist: false,
+  indexOfSongFromPlaylist: 0,
   currentPlaylist: []
 };
 
-export function setCurrentlyPlaying(song) {
-  let currentlyPlaying = this.state.currentlyPlaying
+export function clearSelectedMusic() {
+  let currentlyPlaying = this.state.currentlyPlaying;
+  currentlyPlaying.songData = null;
+  currentlyPlaying.audio = null;
+  currentlyPlaying.playTime = 0;
+  currentlyPlaying.isPlaying = false;
+  currentlyPlaying.isPlayingFromPlaylist = false;
+  currentlyPlaying.indexOfSongFromPlaylist = 0;
+  currentlyPlaying.currentPlaylist = [];
+  // manually resetting this allow for not having to reset the toggle / set functions
+  this.setState({currentlyPlaying});
+}
+
+export function setCurrentlyPlaying(song, isPlayingFromPlaylist, indexOfSongFromPlaylist) {
+  let currentlyPlaying = this.state.currentlyPlaying;
   if(currentlyPlaying.audio !== null) {
     // make sure to stop old audio
     currentlyPlaying.audio.pause();
   }
   currentlyPlaying.playTime = 0;
-  currentlyPlaying.isPlaying = false;
+  currentlyPlaying.isPlaying = true;
+  currentlyPlaying.isPlayingFromPlaylist = isPlayingFromPlaylist;
+  if (isPlayingFromPlaylist) {
+    currentlyPlaying.indexOfSongFromPlaylist = indexOfSongFromPlaylist;
+  }
   
   // now new audio and data gets setup
   currentlyPlaying.songData = song.songInfo;
   currentlyPlaying.audio = new Audio(song.fileLocation);
+  currentlyPlaying.audio.play();
   this.setState({currentlyPlaying});
 };
 
@@ -40,9 +60,43 @@ export function togglePlayingAndAudio() {
 };
 
 export function setPlayTime() {
-  let currentlyPlaying = this.state.currentlyPlaying
+  let currentlyPlaying = this.state.currentlyPlaying;
   // currentlyPlaying.playTime = this.state.currentlyPlaying.audio.currentTime
   // or should i do my own tick
-  currentlyPlaying.playTime = this.state.currentlyPlaying.audio.currentTime
+  currentlyPlaying.playTime = this.state.currentlyPlaying.audio.currentTime;
+  if(currentlyPlaying.audio.ended && currentlyPlaying.isPlayingFromPlaylist) {
+    const nextSongIndex = currentlyPlaying.indexOfSongFromPlaylist + 1;
+    if (nextSongIndex < currentlyPlaying.currentPlaylist.length ) {
+      const nextSong = currentlyPlaying.currentPlaylist[nextSongIndex];
+      // the this is the binded this from where we bind setPlayTime in the main app.js
+      currentlyPlaying.setCurrentlyPlaying(nextSong, true, nextSongIndex)
+    }
+  }
+  this.setState({currentlyPlaying});
+}
+
+export function addArtistToPlayList() {
+
+}
+
+export function addAlbumToPlayList() {
+
+}
+
+export function addSongToPlayList(song) {
+  let currentlyPlaying = this.state.currentlyPlaying;
+  currentlyPlaying.currentPlaylist.push(song);
+  this.setState({currentlyPlaying});
+}
+
+export function removeSongFromPlaylist(index) {
+  let currentlyPlaying = this.state.currentlyPlaying;
+  currentlyPlaying.currentPlaylist.splice(index, 1);
+  this.setState({currentlyPlaying});
+}
+
+export function clearPlaylist() {
+  let currentlyPlaying = this.state.currentlyPlaying;
+  currentlyPlaying.currentPlaylist = [];
   this.setState({currentlyPlaying});
 }
