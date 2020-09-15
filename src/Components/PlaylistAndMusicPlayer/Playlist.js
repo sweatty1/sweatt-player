@@ -3,6 +3,7 @@ import { ListItem, List, ListItemText, IconButton, ListItemSecondaryAction } fro
 import { CurrentlyPlayingContext } from '../../Contexts/CurrentlyPlayingContext';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
+import ClearIcon from '@material-ui/icons/Clear';
 
 const PlaylistHeader = (props) => {
     return(
@@ -10,7 +11,7 @@ const PlaylistHeader = (props) => {
             {({clearPlaylist}) => 
                 <h3>Current PlayList
                 <IconButton onClick={(event) => clearPlaylist()}>
-                    <RemoveCircleIcon/>
+                    <ClearIcon/>
                 </IconButton>
                 </h3>
             }
