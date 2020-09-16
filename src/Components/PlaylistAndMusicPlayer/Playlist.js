@@ -23,7 +23,7 @@ const Playlist = (props) => {
     return (
         <div>
             {PlaylistHeader()}
-            <List style={{maxHeight: 200, overflow: 'auto'}}>
+            <List style={{maxHeight: 200, height: 200, overflow: 'auto'}}>
             <CurrentlyPlayingContext.Consumer>
                 {({currentPlaylist, removeSongFromPlaylist, setCurrentlyPlaying}) => (
                     currentPlaylist.map((playlistSong, index) => 

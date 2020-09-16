@@ -1,13 +1,15 @@
 import React, { useContext } from 'react';
-import { ListItem, List, ListItemText, Menu, MenuItem } from '@material-ui/core';
+import { ListItem, List, ListItemText, Menu, MenuItem, Switch } from '@material-ui/core';
 import { MusicInfoContext } from '../../Contexts/MusicInfoContext';
 import { CurrentlyPlayingContext } from '../../Contexts/CurrentlyPlayingContext';
+import { SettingsContext } from '../../Contexts/SettingsContext';
 var { dialog } = window.require('electron').remote;
 
-export default function MusicAppHeader() {
+export default function MusicAppHeader(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const currentlyPlayingContext = useContext(CurrentlyPlayingContext);
   const musicInfoContext = useContext(MusicInfoContext);
+  const settingContext = useContext(SettingsContext);
 
   const handleOpenMenu = (event) => {
     setAnchorEl(event.currentTarget)
@@ -40,6 +42,10 @@ export default function MusicAppHeader() {
     });
   }
 
+  const handleToggleTheme = (event) => {
+    settingContext.toggleTheme(event);
+  };
+
   return (
     <header className="App-header">
       <List component="nav">
@@ -66,6 +72,13 @@ export default function MusicAppHeader() {
         </MenuItem>
         <MenuItem onClick={() => handleClearAllMusic()}>
         Clear Entire State
+        </MenuItem>
+        <MenuItem>
+          Dark Theme
+          <Switch checked={settingContext.currentTheme.palette.type === 'light' ? false : true}
+          onChange={(event) => handleToggleTheme(event)}
+          name="currentTheme">
+          </Switch>
         </MenuItem>
       </Menu>
     </header>
