@@ -75,12 +75,20 @@ export function setPlayTime() {
   this.setState({currentlyPlaying});
 }
 
-export function addArtistToPlayList() {
-
+export function addArtistToPlayList(artist) {
+  let musicInfo = this.state.musicInfo
+  let filteredSongs = musicInfo.songs.filter(song => song.songInfo.common.artist === artist)
+  let currentlyPlaying = this.state.currentlyPlaying;
+  currentlyPlaying.currentPlaylist = currentlyPlaying.currentPlaylist.concat(filteredSongs);
+  this.setState({currentlyPlaying});
 }
 
-export function addAlbumToPlayList() {
-
+export function addAlbumToPlayList(album) {
+  let musicInfo = this.state.musicInfo;
+  let filteredSongs = musicInfo.songs.filter(song => song.songInfo.common.album === album)
+  let currentlyPlaying = this.state.currentlyPlaying;
+  currentlyPlaying.currentPlaylist = currentlyPlaying.currentPlaylist.concat(filteredSongs); // think this will reset the currently playing/inprogress
+  this.setState({currentlyPlaying});
 }
 
 export function addSongToPlayList(song) {

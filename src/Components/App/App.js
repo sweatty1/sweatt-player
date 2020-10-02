@@ -4,8 +4,10 @@ import PlaylistAndMusicPlayer from '../PlaylistAndMusicPlayer/PlaylistAndMusicPl
 import MusicInfoDisplay from '../MusicInfoDisplay/MusicInfoDisplay';
 import MusicAppHeader from '../MusicAppHeader/MusicAppHeader';
 import { ThemeProvider } from '@material-ui/core/styles';
-import { MusicInfoContext, BaseMusicInfoState, readMusicFolder, clearAllMusic } from '../../Contexts/MusicInfoContext';
-import { CurrentlyPlayingContext, BaseCurrentlyPlayingState, setCurrentlyPlaying, togglePlayingAndAudio, setPlayTime, addSongToPlayList, clearPlaylist, clearSelectedMusic, removeSongFromPlaylist } from '../../Contexts/CurrentlyPlayingContext';
+import { MusicInfoContext, BaseMusicInfoState, readMusicFolder, clearAllMusic, resetFilter, filterByArtist, filterByAlbum } from '../../Contexts/MusicInfoContext';
+import { CurrentlyPlayingContext, BaseCurrentlyPlayingState, setCurrentlyPlaying, togglePlayingAndAudio, setPlayTime, 
+  addArtistToPlayList, addAlbumToPlayList, addSongToPlayList,
+  clearPlaylist, clearSelectedMusic, removeSongFromPlaylist } from '../../Contexts/CurrentlyPlayingContext';
 import { SettingsContext, BaseSettingsState, toggleTheme } from '../../Contexts/SettingsContext';
 
 class App extends React.Component {
@@ -18,6 +20,8 @@ class App extends React.Component {
     currentlyPlayingState.setCurrentlyPlaying = setCurrentlyPlaying.bind(this);
     currentlyPlayingState.togglePlayingAndAudio = togglePlayingAndAudio.bind(this);
     currentlyPlayingState.setPlayTime = setPlayTime.bind(this);
+    currentlyPlayingState.addArtistToPlayList = addArtistToPlayList.bind(this);
+    currentlyPlayingState.addAlbumToPlayList = addAlbumToPlayList.bind(this);
     currentlyPlayingState.addSongToPlayList = addSongToPlayList.bind(this);
     currentlyPlayingState.clearPlaylist = clearPlaylist.bind(this);
     currentlyPlayingState.removeSongFromPlaylist = removeSongFromPlaylist.bind(this);
@@ -26,6 +30,9 @@ class App extends React.Component {
     let musicInfoState = BaseMusicInfoState;
     musicInfoState.clearLoadedMusic = clearAllMusic.bind(this);
     musicInfoState.readMusicFolder = readMusicFolder.bind(this);
+    musicInfoState.resetFilter = resetFilter.bind(this);
+    musicInfoState.filterByArtist = filterByArtist.bind(this);
+    musicInfoState.filterByAlbum = filterByAlbum.bind(this);
 
     let settingsState = BaseSettingsState;
     settingsState.toggleTheme = toggleTheme.bind(this);

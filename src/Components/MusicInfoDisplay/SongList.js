@@ -14,8 +14,8 @@ const SongList = (props) => {
             <CurrentlyPlayingContext.Consumer>
             {({setCurrentlyPlaying, addSongToPlayList}) => (
                 <MusicInfoContext.Consumer>
-                {({songs}) => (
-                    songs.map((song, index) => 
+                {({filteredSongs}) => (
+                    filteredSongs.map((song, index) => 
                         <ListItem key={"Song"+index} button onClick={(event) => setCurrentlyPlaying(song, false)}>
                             <Grid container>
                             <Grid item xs={6}><ListItemText primary={song.songInfo.common.title}/></Grid>
