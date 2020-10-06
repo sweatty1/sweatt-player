@@ -1,68 +1,53 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# Sweatt-Player
 
-In the project directory, you can run:
+Electron React js application created for fun and practice.
 
-### `npm start`
+# Scripts
+Main scripts for development
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### `npm run react-start`
+Runs the application in development mode generating builds on changes but not displaying in the browser
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### `npm run electron-start`
+Runs a nodemon (a node demon) which watches for changes in the build from react-start process and relauches the electron application
 
-### `npm test`
+### `npm run preelectron-pack` && `react-build`
+Creates a build folder with the application.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### `npm run electron-pack`
+Runs electron-builder creating a dist folder containing an executable based off the build folder. electron-builder runs preelectron-pack to insure the build is up to date.
 
-### `npm run build`
+### `npm start old-electron-start`
+Runs an instance of the current build in the build folder
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Development Prep
+Development is done inside of an instance of electron (chromium render engine and node runtime).\
+As we need the ability to access folders and files (music folder\files) on the machine via node fs and browsers prevents this for safety.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+1. Install packages with npm or yarn.
+2. Edit `node_modules\strtok3\lib\FsPromise.js` and `node_modules\music-metadata\lib\common\RandomFileReader.js`\
+Changing `require("fs");` to `window.require("fs")`\
+window being the instance of electron's node allowing the modules to have proper fs access otherwise the app will crash when music folder reader occurs.
+3. Start the react builder with react-start and then start the nodemon with electron-start.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Normally for development you will have the processes react-start and electron-start running.\
+Any save will rebuild the app and relauch an instance of electron.\
+Sadly this doens't work all the time. This live reload is working as a mirror for the `'http://localhost:3000'` which means our electron is simply a mirror of the web versions.\
+This becomes a problem when trying to play any of our music.
 
-### `npm run eject`
+To work around this we have to change in the `public\main.js`
+```
+isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`,
+```
+to
+```
+`file://${path.join(__dirname, '../build/index.html')}`
+```
+So now we use the dist file for electron by default.\
+Althought this means that after any changes one would need to run 
+`npm run react-build`
+then
+`npm run old-electron-start`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
