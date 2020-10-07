@@ -5,10 +5,12 @@ import MusicInfoDisplay from '../MusicInfoDisplay/MusicInfoDisplay';
 import MusicAppHeader from '../MusicAppHeader/MusicAppHeader';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { MusicInfoContext, BaseMusicInfoState, readMusicFolder, clearAllMusic, resetFilter, filterByArtist, filterByAlbum } from '../../Contexts/MusicInfoContext';
-import { CurrentlyPlayingContext, BaseCurrentlyPlayingState, setCurrentlyPlaying, togglePlayingAndAudio, setPlayTime, 
+import { CurrentlyPlayingContext, BaseCurrentlyPlayingState, setCurrentlyPlaying,
+  togglePlayingAndAudio, setPlayTime, setVolume, adjustPlayingVolume, jumpToSongSpot,
   addArtistToPlayList, addAlbumToPlayList, addSongToPlayList,
   clearPlaylist, clearSelectedMusic, removeSongFromPlaylist } from '../../Contexts/CurrentlyPlayingContext';
 import { SettingsContext, BaseSettingsState, toggleTheme } from '../../Contexts/SettingsContext';
+import VolumeControl from '../VolumeControl';
 
 class App extends React.Component {
   constructor(props) {
@@ -26,6 +28,9 @@ class App extends React.Component {
     currentlyPlayingState.clearPlaylist = clearPlaylist.bind(this);
     currentlyPlayingState.removeSongFromPlaylist = removeSongFromPlaylist.bind(this);
     currentlyPlayingState.clearSelectedMusic = clearSelectedMusic.bind(this);
+    currentlyPlayingState.setVolume = setVolume.bind(this);
+    currentlyPlayingState.adjustPlayingVolume = adjustPlayingVolume.bind(this);
+    currentlyPlayingState.jumpToSongSpot = jumpToSongSpot.bind(this);
     
     let musicInfoState = BaseMusicInfoState;
     musicInfoState.clearLoadedMusic = clearAllMusic.bind(this);
@@ -36,7 +41,7 @@ class App extends React.Component {
 
     let settingsState = BaseSettingsState;
     settingsState.toggleTheme = toggleTheme.bind(this);
-
+    
     this.state = {musicInfo: musicInfoState, currentlyPlaying: currentlyPlayingState, settings: settingsState};
   }
 
@@ -48,6 +53,8 @@ class App extends React.Component {
       <CurrentlyPlayingContext.Provider value = {this.state.currentlyPlaying}>
         <div className="App">
           <MusicAppHeader/>
+          <VolumeControl/>
+          <h1>{Math.round(this.state.currentlyPlaying.volume * 100)}%</h1>
           <div className="App-body">
             <PlaylistAndMusicPlayer/>
             <MusicInfoDisplay/>

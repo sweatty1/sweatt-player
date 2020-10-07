@@ -10,7 +10,8 @@ export const BaseCurrentlyPlayingState = {
   isPlaying: false,
   isPlayingFromPlaylist: false,
   indexOfSongFromPlaylist: 0,
-  currentPlaylist: []
+  currentPlaylist: [],
+  volume: 1
 };
 
 export function clearSelectedMusic() {
@@ -42,6 +43,7 @@ export function setCurrentlyPlaying(song, isPlayingFromPlaylist, indexOfSongFrom
   // now new audio and data gets setup
   currentlyPlaying.songData = song.songInfo;
   currentlyPlaying.audio = new Audio(song.fileLocation);
+  currentlyPlaying.audio.volume = currentlyPlaying.volume;
   currentlyPlaying.audio.play();
   this.setState({currentlyPlaying});
 };
@@ -64,15 +66,32 @@ export function setPlayTime() {
   // currentlyPlaying.playTime = this.state.currentlyPlaying.audio.currentTime
   // or should i do my own tick
   currentlyPlaying.playTime = this.state.currentlyPlaying.audio.currentTime;
-  if(currentlyPlaying.audio.ended && currentlyPlaying.isPlayingFromPlaylist) {
-    const nextSongIndex = currentlyPlaying.indexOfSongFromPlaylist + 1;
-    if (nextSongIndex < currentlyPlaying.currentPlaylist.length ) {
-      const nextSong = currentlyPlaying.currentPlaylist[nextSongIndex];
+  if(currentlyPlaying.audio.ended) { 
+    currentlyPlaying.isPlaying = false;
+  }
+  let nextPlaylistSongIndex = currentlyPlaying.indexOfSongFromPlaylist + 1;
+  if(currentlyPlaying.audio.ended && currentlyPlaying.isPlayingFromPlaylist && nextPlaylistSongIndex < currentlyPlaying.currentPlaylist.length) {
+      const nextSong = currentlyPlaying.currentPlaylist[nextPlaylistSongIndex];
       // the this is the binded this from where we bind setPlayTime in the main app.js
-      currentlyPlaying.setCurrentlyPlaying(nextSong, true, nextSongIndex)
-    }
+      currentlyPlaying.setCurrentlyPlaying(nextSong, true, nextPlaylistSongIndex)
   }
   this.setState({currentlyPlaying});
+}
+
+export function setVolume(event, newVolume) {
+  let currentlyPlaying = this.state.currentlyPlaying;
+  currentlyPlaying.volume = newVolume/100;
+  this.setState({currentlyPlaying})
+}
+
+export function adjustPlayingVolume() {
+  let currentlyPlaying = this.state.currentlyPlaying;
+  currentlyPlaying.audio.volume = currentlyPlaying.volume;
+}
+
+export function jumpToSongSpot(event, songSpot) {
+  let currentlyPlaying = this.state.currentlyPlaying;
+  currentlyPlaying.audio.currentTime = songSpot/100 * currentlyPlaying.songData.format.duration;
 }
 
 export function addArtistToPlayList(artist) {

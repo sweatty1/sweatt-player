@@ -3,7 +3,7 @@ import { CurrentlyPlayingContext } from '../../Contexts/CurrentlyPlayingContext'
 import { RenderTime } from '../../Utilities/TimeHandling';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
-import { IconButton, Container } from '@material-ui/core';
+import { IconButton, Container, Slider, Grid } from '@material-ui/core';
 
 // This could probably be a functional component
 // although might be good idea to have both types
@@ -29,6 +29,7 @@ class MusicPlayer extends React.Component {
         const currentlyPlayingContext = this.context;
         if (currentlyPlayingContext.isPlaying && currentlyPlayingContext.songData !== null) {
             currentlyPlayingContext.setPlayTime();
+            currentlyPlayingContext.adjustPlayingVolume();
         }
       }
 
@@ -48,13 +49,23 @@ class MusicPlayer extends React.Component {
         if(currentlyPlayingContext.songData === null){
             return(<h3>No Song Selected</h3>);
         }
+        var songProgress = (currentlyPlayingContext.playTime/currentlyPlayingContext.songData.format.duration) * 100;
         return (
             <Container style={{alignItems: 'center'}}>
                 <h3>Currently Playing</h3>
                 <div>
-                    <span>{currentlyPlayingContext.songData.common.title} - </span>
-                    <span>{RenderTime(currentlyPlayingContext.playTime)} / {RenderTime(currentlyPlayingContext.songData.format.duration)} </span>
-                    <span>{this.playOrPause()}</span>
+                    <span>{currentlyPlayingContext.songData.common.title} {this.playOrPause()}</span>
+                    <Grid container spacing={2}>
+                        <Grid item>
+                            {RenderTime(currentlyPlayingContext.playTime)}
+                        </Grid>
+                        <Grid item xs>
+                        <Slider value={songProgress} onChange={currentlyPlayingContext.jumpToSongSpot} />
+                        </Grid>
+                        <Grid item>
+                            {RenderTime(currentlyPlayingContext.songData.format.duration)}
+                        </Grid>
+                    </Grid>
                 </div>
             </Container>
         )
