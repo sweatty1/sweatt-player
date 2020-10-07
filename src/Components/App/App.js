@@ -53,8 +53,13 @@ class App extends React.Component {
       <CurrentlyPlayingContext.Provider value = {this.state.currentlyPlaying}>
         <div className="App">
           <MusicAppHeader/>
-          <VolumeControl/>
-          <h1>{Math.round(this.state.currentlyPlaying.volume * 100)}%</h1>
+          <div style={{height: 300}}>
+            <VolumeControl orientation="vertical"/>
+          </div>
+          <div style={{width: 300}}>
+            <VolumeControl orientation="horizontal"/>
+          </div>
+          <VolumeControl />
           <div className="App-body">
             <PlaylistAndMusicPlayer/>
             <MusicInfoDisplay/>

@@ -17,9 +17,9 @@ function createWindow() {
 
     mainWin.loadURL(
         // isDev is only false when ran from .exe from electron-pack
-        // isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`,
+        isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`,
         // when needing edit things around playing music uncomment this and use the react-build and old-electron-start scripts
-        `file://${path.join(__dirname, '../build/index.html')}`
+        // `file://${path.join(__dirname, '../build/index.html')}`
     )
 }
 
