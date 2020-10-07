@@ -3,7 +3,7 @@ import { MusicInfoContext } from '../../Contexts/MusicInfoContext';
 import { CurrentlyPlayingContext } from '../../Contexts/CurrentlyPlayingContext';
 import { ListItem, List, ListItemText, ListItemSecondaryAction, IconButton } from '@material-ui/core';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
-import ArrowBack from '@material-ui/icons/ArrowBack';
+import Refresh from '@material-ui/icons/Refresh';
 
 const ArtistList = (props) => {
     return (
@@ -12,7 +12,7 @@ const ArtistList = (props) => {
             <div>
             <h1>Artists
                     <IconButton onClick={(event) => resetFilter()}>
-                        <ArrowBack/>
+                        <Refresh/>
                     </IconButton>
                 </h1>
             <List>

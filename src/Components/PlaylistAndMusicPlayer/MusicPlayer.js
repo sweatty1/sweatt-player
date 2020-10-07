@@ -17,7 +17,7 @@ class MusicPlayer extends React.Component {
     componentDidMount() {
         this.timerID = setInterval(
           () => this.halfTick(),
-          1000      // 1 sec and .5 sec feel smooth, 1 sec feels behind at times .5 doubles amount of rerenders. 750 tick has hiccups 
+          500      // 1 sec and .5 sec feel smooth, 1 sec feels behind at times .5 may double amount of rerenders. 750 tick has hiccups 
         );
       }
     

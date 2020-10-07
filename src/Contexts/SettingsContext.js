@@ -17,8 +17,7 @@ export const BaseSettingsState = {
 };
 
 export function toggleTheme(event) {
-    let settings = this.state.settings;
-    settings.currentTheme = event.target.checked ? {...darkTheme} : {...regularTheme};
-    this.setState({settings});
-    //this.setState({ ...this.state, [event.target.name]: newTheme });
+  let settings = this.state.settings;
+  settings.currentTheme = event.target.checked ? {...darkTheme} : {...regularTheme};
+  this.setState({settings});
 }
