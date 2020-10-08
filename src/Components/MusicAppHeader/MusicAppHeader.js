@@ -47,7 +47,7 @@ export default function MusicAppHeader(props) {
   };
 
   return (
-    <header className="App-header">
+    <div className="App-header">
       <List component="nav">
         <ListItem button
           aria-haspopup="true"
@@ -81,6 +81,6 @@ export default function MusicAppHeader(props) {
           </Switch>
         </MenuItem>
       </Menu>
-    </header>
+    </div>
   )
 }

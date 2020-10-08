@@ -1,15 +1,14 @@
 import React from 'react';
 import { MusicInfoContext } from '../../Contexts/MusicInfoContext';
 import { CurrentlyPlayingContext } from '../../Contexts/CurrentlyPlayingContext';
-import { ListItem, List, ListItemText, ListItemSecondaryAction, IconButton, Grid } from '@material-ui/core';
+import { ListItem, List, ListItemText, ListItemSecondaryAction, IconButton, Grid, Typography } from '@material-ui/core';
 import { RenderTime } from '../../Utilities/TimeHandling';
-import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import QueueMusicIcon from '@material-ui/icons/QueueMusic';
 
 const SongList = (props) => {
     return (
         <div>
-        <h1>Songs</h1>
+        <Typography variant="h5">Songs</Typography>
         <List className="list-group">
             <CurrentlyPlayingContext.Consumer>
             {({setCurrentlyPlaying, addSongToPlayList}) => (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListItem, List, ListItemText, IconButton, ListItemSecondaryAction } from '@material-ui/core';
+import { ListItem, List, ListItemText, IconButton, ListItemSecondaryAction, Typography } from '@material-ui/core';
 import { CurrentlyPlayingContext } from '../../Contexts/CurrentlyPlayingContext';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
@@ -9,11 +9,12 @@ const PlaylistHeader = (props) => {
     return(
         <CurrentlyPlayingContext.Consumer>
             {({clearPlaylist}) => 
-                <h3>Current PlayList
-                <IconButton onClick={(event) => clearPlaylist()}>
-                    <ClearIcon/>
-                </IconButton>
-                </h3>
+                <Typography variant="h5">
+                    Current PlayList
+                    <IconButton onClick={(event) => clearPlaylist()}>
+                        <ClearIcon/>
+                    </IconButton>
+                </Typography>
             }
         </CurrentlyPlayingContext.Consumer>
     )

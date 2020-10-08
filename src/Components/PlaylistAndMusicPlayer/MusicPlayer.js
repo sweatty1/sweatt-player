@@ -3,7 +3,7 @@ import { CurrentlyPlayingContext } from '../../Contexts/CurrentlyPlayingContext'
 import { RenderTime } from '../../Utilities/TimeHandling';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
-import { IconButton, Container, Slider, Grid } from '@material-ui/core';
+import { IconButton, Container, Slider, Grid, Typography } from '@material-ui/core';
 
 // This could probably be a functional component
 // although might be good idea to have both types
@@ -47,14 +47,15 @@ class MusicPlayer extends React.Component {
     render() {
         const currentlyPlayingContext = this.context;
         if(currentlyPlayingContext.songData === null){
-            return(<h3>No Song Selected</h3>);
+            return(<Typography variant="h5">No Song Selected</Typography>);
         }
         var songProgress = (currentlyPlayingContext.playTime/currentlyPlayingContext.songData.format.duration) * 100;
         return (
             <Container style={{alignItems: 'center'}}>
-                <h3>Currently Playing</h3>
+                <Typography variant="h5">
+                    {currentlyPlayingContext.songData.common.title} {this.playOrPause()}
+                </Typography>
                 <div>
-                    <span>{currentlyPlayingContext.songData.common.title} {this.playOrPause()}</span>
                     <Grid container spacing={2}>
                         <Grid item>
                             {RenderTime(currentlyPlayingContext.playTime)}

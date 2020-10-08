@@ -1,7 +1,7 @@
 import React from 'react';
 import { MusicInfoContext } from '../../Contexts/MusicInfoContext';
 import { CurrentlyPlayingContext } from '../../Contexts/CurrentlyPlayingContext';
-import { ListItem, List, ListItemText, ListItemSecondaryAction, IconButton } from '@material-ui/core';
+import { ListItem, List, ListItemText, ListItemSecondaryAction, IconButton, Typography } from '@material-ui/core';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import Refresh from '@material-ui/icons/Refresh';
 
@@ -10,11 +10,12 @@ const ArtistList = (props) => {
         <MusicInfoContext.Consumer>
         {({filteredArtists, resetFilter, filterByArtist}) => (
             <div>
-            <h1>Artists
-                    <IconButton onClick={(event) => resetFilter()}>
-                        <Refresh/>
-                    </IconButton>
-                </h1>
+            <Typography variant="h5">
+                Artists
+                <IconButton onClick={(event) => resetFilter()}>
+                    <Refresh/>
+                </IconButton>
+            </Typography>
             <List>
             <CurrentlyPlayingContext.Consumer>
             {({addArtistToPlayList}) => (

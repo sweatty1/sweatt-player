@@ -2,7 +2,7 @@ import React from 'react';
 import ArtistList from './ArtistList';
 import SongList from './SongList';
 import AlbumList from './AlbumList';
-import { Grid, Paper, Container }from '@material-ui/core';
+import { Grid, Paper, Box }from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const styles = makeStyles(theme => ({
@@ -17,7 +17,7 @@ const styles = makeStyles(theme => ({
 const MusicInfoDisplay = (props) => {
     const classes = styles;
     return (
-        <Container maxWidth={false}>
+        <Box padding={2}>
             <Grid container spacing={3}>
                 <Grid item xs={4}>
                 <Paper className={classes.paper}>
@@ -35,7 +35,7 @@ const MusicInfoDisplay = (props) => {
                 </Paper>
                 </Grid>
             </Grid>
-        </Container>
+        </Box>
     )
 }
 export default MusicInfoDisplay;

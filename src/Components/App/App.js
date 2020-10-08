@@ -10,7 +10,6 @@ import { CurrentlyPlayingContext, BaseCurrentlyPlayingState, setCurrentlyPlaying
   addArtistToPlayList, addAlbumToPlayList, addSongToPlayList,
   clearPlaylist, clearSelectedMusic, removeSongFromPlaylist } from '../../Contexts/CurrentlyPlayingContext';
 import { SettingsContext, BaseSettingsState, toggleTheme } from '../../Contexts/SettingsContext';
-import VolumeControl from '../VolumeControl';
 
 class App extends React.Component {
   constructor(props) {
@@ -53,13 +52,6 @@ class App extends React.Component {
       <CurrentlyPlayingContext.Provider value = {this.state.currentlyPlaying}>
         <div className="App">
           <MusicAppHeader/>
-          <div style={{height: 300}}>
-            <VolumeControl orientation="vertical"/>
-          </div>
-          <div style={{width: 300}}>
-            <VolumeControl orientation="horizontal"/>
-          </div>
-          <VolumeControl />
           <div className="App-body">
             <PlaylistAndMusicPlayer/>
             <MusicInfoDisplay/>
