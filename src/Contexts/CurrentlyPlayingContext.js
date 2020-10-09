@@ -17,6 +17,10 @@ export const BaseCurrentlyPlayingState = {
 export function clearSelectedMusic() {
   let currentlyPlaying = this.state.currentlyPlaying;
   currentlyPlaying.songData = null;
+  if(currentlyPlaying.audio !== null) {
+    // make sure to stop old audio
+    currentlyPlaying.audio.pause();
+  }
   currentlyPlaying.audio = null;
   currentlyPlaying.playTime = 0;
   currentlyPlaying.isPlaying = false;
@@ -78,15 +82,45 @@ export function setPlayTime() {
   this.setState({currentlyPlaying});
 }
 
+// Occurs anytime the slider is moved
 export function setVolume(event, newVolume) {
   let currentlyPlaying = this.state.currentlyPlaying;
   currentlyPlaying.volume = newVolume/100;
   this.setState({currentlyPlaying})
 }
 
+// Occurs when slider mouseup copy state of volume on that and previous state
+// this is need for the use case of when a user changes the volume and then manually changes volume to 0 and hits unmute
+// which makes the volume behave like youtubes volume slider.
+export function updateVolumeTrail(event, newVolume) {
+  let currentlyPlaying = this.state.currentlyPlaying;
+  if(currentlyPlaying.volumeTrail !== 0) {
+    currentlyPlaying.olderVolumeTrial = currentlyPlaying.volumeTrail;
+  }
+  currentlyPlaying.volumeTrail = newVolume/100;
+  this.setState({currentlyPlaying})
+}
+
 export function adjustPlayingVolume() {
   let currentlyPlaying = this.state.currentlyPlaying;
   currentlyPlaying.audio.volume = currentlyPlaying.volume;
+}
+
+// This works like youtubes volume
+export function toggleMute() {
+  let currentlyPlaying = this.state.currentlyPlaying;
+  if (currentlyPlaying.volume === 0 && currentlyPlaying.volumeTrail === 0) {
+    currentlyPlaying.volume = currentlyPlaying.olderVolumeTrial
+  } else if (currentlyPlaying.volume === 0) {
+    // When muted return to last volume state
+    currentlyPlaying.volume = currentlyPlaying.volumeTrail;
+  } else if (currentlyPlaying.volume !== 0) {
+    // Muting and saving the volume state
+    // currentlyPlaying.volumeTrail = currentlyPlaying.volume; // not actually needed due to updateVolumeTrail
+    currentlyPlaying.volume = 0;
+  }
+
+  this.setState({currentlyPlaying})
 }
 
 export function jumpToSongSpot(event, songSpot) {
