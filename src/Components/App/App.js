@@ -9,7 +9,7 @@ import { CurrentlyPlayingContext, BaseCurrentlyPlayingState, setCurrentlyPlaying
   togglePlayingAndAudio, setPlayTime, setVolume, adjustPlayingVolume, jumpToSongSpot,
   addArtistToPlayList, addAlbumToPlayList, addSongToPlayList,
   clearPlaylist, clearSelectedMusic, removeSongFromPlaylist } from '../../Contexts/CurrentlyPlayingContext';
-import { SettingsContext, BaseSettingsState, toggleTheme } from '../../Contexts/SettingsContext';
+import { SettingsContext, BaseSettingsState, toggleTheme, setRootFolder, clearRootFolder } from '../../Contexts/SettingsContext';
 
 class App extends React.Component {
   constructor(props) {
@@ -40,6 +40,8 @@ class App extends React.Component {
 
     let settingsState = BaseSettingsState;
     settingsState.toggleTheme = toggleTheme.bind(this);
+    settingsState.setRootFolder = setRootFolder.bind(this);
+    settingsState.clearRootFolder = clearRootFolder.bind(this);
     
     this.state = {musicInfo: musicInfoState, currentlyPlaying: currentlyPlayingState, settings: settingsState};
   }

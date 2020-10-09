@@ -13,11 +13,24 @@ const darkTheme = createMuiTheme({
 })
 
 export const BaseSettingsState = {
-  currentTheme: regularTheme
+  currentTheme: regularTheme,
+  rootMusicFolder: 'No folder'
 };
 
 export function toggleTheme(event) {
   let settings = this.state.settings;
   settings.currentTheme = event.target.checked ? {...darkTheme} : {...regularTheme};
+  this.setState({settings});
+}
+
+export function setRootFolder(folder) {
+  let settings = this.state.settings;
+  settings.rootMusicFolder = folder;
+  this.setState({settings});
+}
+
+export function clearRootFolder() {
+  let settings = this.state.settings;
+  settings.rootMusicFolder = 'No folder';
   this.setState({settings});
 }
