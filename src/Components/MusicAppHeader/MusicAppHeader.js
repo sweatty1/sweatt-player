@@ -21,13 +21,13 @@ export default function MusicAppHeader(props) {
   const handleClearSelectedMusic = () => {
     currentlyPlayingContext.clearSelectedMusic();
     setAnchorEl(null);
-  }
+  };
 
   const handleClearAllMusic = () => {
     currentlyPlayingContext.clearSelectedMusic();
     musicInfoContext.clearLoadedMusic();
     setAnchorEl(null);
-  }
+  };
 
   const handleSetBaseFolderForMusic = () => {
     dialog.showOpenDialog({ title: "Select Music Folder", properties: ['openDirectory']}).then((data) => {
@@ -40,7 +40,7 @@ export default function MusicAppHeader(props) {
       }
       setAnchorEl(null);
     });
-  }
+  };
 
   const handleToggleTheme = (event) => {
     settingContext.toggleTheme(event);

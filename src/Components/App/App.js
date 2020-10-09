@@ -6,7 +6,7 @@ import MusicAppHeader from '../MusicAppHeader/MusicAppHeader';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { MusicInfoContext, BaseMusicInfoState, readMusicFolder, clearAllMusic, resetFilter, filterByArtist, filterByAlbum } from '../../Contexts/MusicInfoContext';
 import { CurrentlyPlayingContext, BaseCurrentlyPlayingState, setCurrentlyPlaying,
-  togglePlayingAndAudio, setPlayTime, setVolume, updateVolumeTrail, adjustPlayingVolume, toggleMute, jumpToSongSpot,
+  togglePlayingAndAudio, setPlayTime, setVolume, adjustPlayingVolume, jumpToSongSpot,
   addArtistToPlayList, addAlbumToPlayList, addSongToPlayList,
   clearPlaylist, clearSelectedMusic, removeSongFromPlaylist } from '../../Contexts/CurrentlyPlayingContext';
 import { SettingsContext, BaseSettingsState, toggleTheme } from '../../Contexts/SettingsContext';
@@ -28,9 +28,7 @@ class App extends React.Component {
     currentlyPlayingState.removeSongFromPlaylist = removeSongFromPlaylist.bind(this);
     currentlyPlayingState.clearSelectedMusic = clearSelectedMusic.bind(this);
     currentlyPlayingState.setVolume = setVolume.bind(this);
-    currentlyPlayingState.updateVolumeTrail = updateVolumeTrail.bind(this);
     currentlyPlayingState.adjustPlayingVolume = adjustPlayingVolume.bind(this);
-    currentlyPlayingState.toggleMute = toggleMute.bind(this);
     currentlyPlayingState.jumpToSongSpot = jumpToSongSpot.bind(this);
     
     let musicInfoState = BaseMusicInfoState;
