@@ -17,6 +17,10 @@ export const BaseCurrentlyPlayingState = {
 export function clearSelectedMusic() {
   let currentlyPlaying = this.state.currentlyPlaying;
   currentlyPlaying.songData = null;
+  if(currentlyPlaying.audio !== null) {
+    // make sure to stop old audio
+    currentlyPlaying.audio.pause();
+  }
   currentlyPlaying.audio = null;
   currentlyPlaying.playTime = 0;
   currentlyPlaying.isPlaying = false;
@@ -78,7 +82,8 @@ export function setPlayTime() {
   this.setState({currentlyPlaying});
 }
 
-export function setVolume(event, newVolume) {
+// Occurs anytime the slider is moved
+export function setVolume(newVolume) {
   let currentlyPlaying = this.state.currentlyPlaying;
   currentlyPlaying.volume = newVolume/100;
   this.setState({currentlyPlaying})

@@ -37,8 +37,8 @@ class MusicPlayer extends React.Component {
         return(
             <CurrentlyPlayingContext.Consumer>
                 {({isPlaying, togglePlayingAndAudio}) => (
-                    isPlaying ? <IconButton onClick={(event) => togglePlayingAndAudio()}><PauseCircleFilledIcon/></IconButton> :
-                    <IconButton onClick={(event) => togglePlayingAndAudio()}><PlayCircleFilledIcon/></IconButton>
+                    isPlaying ? <IconButton onClick={() => togglePlayingAndAudio()}><PauseCircleFilledIcon/></IconButton> :
+                    <IconButton onClick={() => togglePlayingAndAudio()}><PlayCircleFilledIcon/></IconButton>
                 )}
             </CurrentlyPlayingContext.Consumer>
         );
