@@ -77,7 +77,7 @@ export default function MusicAppHeader(props) {
         </MenuItem>
         <MenuItem>
           Dark Theme
-          <Switch checked={settingContext.currentTheme.palette.type === 'light' ? false : true}
+          <Switch checked={settingContext.currentTheme === 'regular' ? false : true}
           onChange={(event) => handleToggleTheme(event)}
           name="currentTheme">
           </Switch>
