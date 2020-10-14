@@ -26,6 +26,7 @@ export default function MusicAppHeader(props) {
   const handleClearAllMusic = () => {
     currentlyPlayingContext.clearSelectedMusic();
     musicInfoContext.clearLoadedMusic();
+    settingContext.clearRootFolder();
     setAnchorEl(null);
   };
 
@@ -33,6 +34,7 @@ export default function MusicAppHeader(props) {
     dialog.showOpenDialog({ title: "Select Music Folder", properties: ['openDirectory']}).then((data) => {
       if (data.filePaths && data.filePaths[0] !== undefined) {
         const folder = data.filePaths[0];
+        settingContext.setRootFolder(folder);
         musicInfoContext.readMusicFolder(folder);
         currentlyPlayingContext.clearSelectedMusic();
       } else {
@@ -54,7 +56,7 @@ export default function MusicAppHeader(props) {
           aria-controls="option-menu"
           onClick={handleOpenMenu}
         >
-          <ListItemText primary="Data Controls" secondary={musicInfoContext.musicFolder} />
+          <ListItemText primary="Data Controls" secondary={settingContext.rootMusicFolder} />
         </ListItem>
       </List>
       <Menu 
@@ -75,7 +77,7 @@ export default function MusicAppHeader(props) {
         </MenuItem>
         <MenuItem>
           Dark Theme
-          <Switch checked={settingContext.currentTheme.palette.type === 'light' ? false : true}
+          <Switch checked={settingContext.currentTheme === 'regular' ? false : true}
           onChange={(event) => handleToggleTheme(event)}
           name="currentTheme">
           </Switch>

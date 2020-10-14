@@ -11,13 +11,11 @@ export const BaseMusicInfoState = {
   filteredArtists: [],
   filteredAlbums: [],
   filteredSongs: [],
-  musicFolder: 'No folder'
 };
 
-export function readMusicFolder(folder) {
-  MusicFolderReader(folder).then(musicInformation => {
+export function readMusicFolder(rootFolder) {
+  MusicFolderReader(rootFolder).then(musicInformation => {
     let musicInfo = this.state.musicInfo;
-    musicInfo.musicFolder = folder;
     musicInfo.artists = musicInfo.filteredArtists = musicInformation.artists;
     musicInfo.albums = musicInfo.filteredAlbums = musicInformation.albums;
     musicInfo.songs = musicInfo.filteredSongs = musicInformation.songs;
@@ -28,7 +26,6 @@ export function readMusicFolder(folder) {
 export function clearAllMusic() {
   let musicInfo = this.state.musicInfo;
   musicInfo.artists = musicInfo.albums = musicInfo.songs = musicInfo.filteredArtists = musicInfo.filteredAlbums = musicInfo.filteredSongs = [];
-  musicInfo.musicFolder = 'No Folder';
   this.setState({musicInfo});
 }
 

@@ -6,7 +6,7 @@ import { Slider, Grid, Typography, Box, IconButton } from '@material-ui/core';
 
 const volumeToggle = (volume, toggleMuteFunction) => {
     return(
-        volume != 0 ? <IconButton onClick={() =>  toggleMuteFunction()}><VolumeUp/></IconButton> :
+        volume !== 0 ? <IconButton onClick={() =>  toggleMuteFunction()}><VolumeUp/></IconButton> :
         <IconButton onClick={() => toggleMuteFunction()}><VolumeOff/></IconButton>    
     )
 }
