@@ -11,6 +11,8 @@ const volumeToggle = (volume, toggleMuteFunction) => {
     )
 }
 
+// if we have multiple controls displayed at the same time volumetrail and olderVolumeTrial may need to be moved back to the state
+// if they try to unmute on a different volume controller then it respects that components volumetrial
 const VolumeControl = (props) => {
     const currentlyPlayingContext = useContext(CurrentlyPlayingContext);
     const [volumeTrail, setVolumeTrail] = React.useState(100);
@@ -27,7 +29,6 @@ const VolumeControl = (props) => {
           currentlyPlayingContext.setVolume(volumeTrail);
         } else if (currentlyPlayingContext.volume !== 0) {
           // Muting and saving the volume state
-          // currentlyPlaying.volumeTrail = currentlyPlaying.volume; // not actually needed due to updateVolumeTrail
           currentlyPlayingContext.setVolume(0);
         }
     };

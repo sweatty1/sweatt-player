@@ -57,7 +57,6 @@ class App extends React.Component {
   // when you refresh app the FS quits working for that instance of electon, but no errors just quite
   // Fix should be in Electron v11.0.0-beta.12 so next full release
   componentDidMount() {
-    this.state.currentlyPlaying.setVolume(50)
     if (this.state.settings.rootMusicFolder !== 'No folder') {
       this.state.musicInfo.readMusicFolder(this.state.settings.rootMusicFolder)
     }
