@@ -22,7 +22,7 @@ const AlbumList = (props) => {
                     filteredAlbums.map((album, index) => 
                         <ListItem key={"Album"+index} button onClick={(event) => filterByAlbum(album)}>
                             <Grid alignItems="center" container>
-                            <Grid item xs={2}><img src={album.albumArts.length > 0 ? album.albumArts[0] : null}/></Grid>
+                            <Grid item xs={2}><img src={album.albumArts.thumbNail}/></Grid>
                             <Grid item xs={10}><ListItemText primary={album.albumName}/></Grid>
                             </Grid>
                             <ListItemSecondaryAction>

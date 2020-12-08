@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListItem, List, ListItemText, IconButton, ListItemSecondaryAction, Typography } from '@material-ui/core';
+import { ListItem, List, ListItemText, IconButton, ListItemSecondaryAction, Grid, Typography } from '@material-ui/core';
 import { CurrentlyPlayingContext } from '../../Contexts/CurrentlyPlayingContext';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
@@ -29,7 +29,12 @@ const Playlist = (props) => {
                 {({currentPlaylist, removeSongFromPlaylist, setCurrentlyPlaying}) => (
                     currentPlaylist.map((playlistSong, index) => 
                         <ListItem key={"PlaylistSong"+index}>
-                            <ListItemText primary={playlistSong.songInfo.common.title}/>
+                            <Grid alignItems="center" container>
+                            <Grid item xs={2}><img src={playlistSong.albumArts.thumbNail}/></Grid>
+                            <Grid item xs={4}><ListItemText primary={playlistSong.songInfo.common.title}/></Grid>
+                            <Grid item xs={3}><ListItemText primary={playlistSong.songInfo.common.artist}/></Grid>
+                            <Grid item xs={3}><ListItemText primary={playlistSong.songInfo.common.album}/></Grid>
+                            </Grid>
                             <ListItemSecondaryAction> 
                                 <IconButton onClick={(event) => setCurrentlyPlaying(playlistSong, true, index)}>
                                     <PlayCircleFilledIcon/>

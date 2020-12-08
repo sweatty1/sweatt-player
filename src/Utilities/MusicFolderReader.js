@@ -25,12 +25,12 @@ function recursiveFolder(folder) {
             let songFileLocation = folder + '\\' + song.name;
             return mm.parseFile(songFileLocation).then(parseResult => {
                 Artists.add(parseResult.common.artist);
-                let albumArts = albumArtDirent.map((direntAlbum) => folder + '\\' + direntAlbum.name )
-                let albumInfo = {albumName: parseResult.common.album, albumArts: albumArts};
-                if (!Albums.some((album) => album.albumName === albumInfo.albumName)){
+                let albumArts = findAlbumArt(folder, parseResult, albumArtDirent);
+                let albumInfo = { albumName: parseResult.common.album, albumArts: albumArts };
+                if (!Albums.some((album) => album.albumName === albumInfo.albumName)) {
                     Albums.push(albumInfo); 
                 }
-                return {songInfo: parseResult, fileLocation: songFileLocation};
+                return {songInfo: parseResult, fileLocation: songFileLocation, albumArts: albumArts};
             })
         })
 
@@ -80,4 +80,19 @@ function OrganizanizeMusic(songs) {
         albums: sortedAlbums,
         artists: sortedArtists
     }
+}
+
+function findAlbumArt(folder, parseResult, albumjpgDirents) {
+    let musicMetaDataAlbumArt = parseResult.common.picture;
+    let thumbNailArt = musicMetaDataAlbumArt;
+    if(!Array.isArray(albumjpgDirents) || !albumjpgDirents.length){
+        return { thumbNail: thumbNailArt, folder: null};;
+    }
+    // let albumArts = albumjpgDirents.map((direntAlbum) => folder + '\\' + direntAlbum.name );
+    // 0 is small 1 is large 2 is small and 3 is large
+    let thumbNailDirentArt = albumjpgDirents.find((direntAlbum) => direntAlbum.name.toUpperCase().includes("SMALL") || direntAlbum.name.toUpperCase().includes("THUMBNAIL"));
+    let folderDirentArt = albumjpgDirents.find((direntAlbum) => direntAlbum.name.toUpperCase().includes("LARGE") || direntAlbum.name.toUpperCase().includes("FOLDER"));
+    if (!thumbNailArt) thumbNailArt = folder + '\\' + thumbNailDirentArt.name;
+    let folderArt = folder + '\\' + folderDirentArt.name;
+    return { thumbNail: thumbNailArt, folder: folderArt};
 }

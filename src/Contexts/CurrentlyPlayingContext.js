@@ -5,6 +5,7 @@ export const CurrentlyPlayingContext = createContext();
 
 export const BaseCurrentlyPlayingState = {
   songData: null,
+  albumArts: null,
   audio: null,
   playTime: 0,
   isPlaying: false,
@@ -21,6 +22,7 @@ export function clearSelectedMusic() {
     // make sure to stop old audio
     currentlyPlaying.audio.pause();
   }
+  currentlyPlaying.albumArts = null;
   currentlyPlaying.audio = null;
   currentlyPlaying.playTime = 0;
   currentlyPlaying.isPlaying = false;
@@ -46,6 +48,7 @@ export function setCurrentlyPlaying(song, isPlayingFromPlaylist, indexOfSongFrom
   
   // now new audio and data gets setup
   currentlyPlaying.songData = song.songInfo;
+  currentlyPlaying.albumArts = song.albumArts;
   currentlyPlaying.audio = new Audio(song.fileLocation);
   currentlyPlaying.audio.volume = currentlyPlaying.volume;
   currentlyPlaying.audio.play();
