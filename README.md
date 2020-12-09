@@ -6,6 +6,9 @@ Electron React js application created for fun and practice.
 # Scripts
 Main scripts for development
 
+Since most development involves playing music and interacting more and more with the file system an automatic build is difficult.
+Suggest to run `npm run react-build` and then `npm start old-electron-start` once changes are made.
+
 ### `npm run react-start`
 Runs the application in development mode generating builds on changes but not displaying in the browser
 
