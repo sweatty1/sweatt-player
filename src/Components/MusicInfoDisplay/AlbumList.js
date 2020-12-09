@@ -1,7 +1,7 @@
 import React from 'react';
 import { MusicInfoContext } from '../../Contexts/MusicInfoContext';
 import { CurrentlyPlayingContext } from '../../Contexts/CurrentlyPlayingContext';
-import { ListItem, List, ListItemText, ListItemSecondaryAction, IconButton, Typography } from '@material-ui/core';
+import { ListItem, List, ListItemText, ListItemSecondaryAction, IconButton, Grid, Typography } from '@material-ui/core';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import Refresh from '@material-ui/icons/Refresh';
 
@@ -21,9 +21,12 @@ const AlbumList = (props) => {
                 {({addAlbumToPlayList}) => (
                     filteredAlbums.map((album, index) => 
                         <ListItem key={"Album"+index} button onClick={(event) => filterByAlbum(album)}>
-                            <ListItemText primary={album}/>
+                            <Grid alignItems="center" container>
+                            <Grid item xs={2}><img src={album.albumArts.thumbNail}/></Grid>
+                            <Grid item xs={10}><ListItemText primary={album.albumName}/></Grid>
+                            </Grid>
                             <ListItemSecondaryAction>
-                                <IconButton onClick={(event) => addAlbumToPlayList(album)}>
+                                <IconButton onClick={(event) => addAlbumToPlayList(album.albumName)}>
                                     <PlaylistAddIcon/>
                                 </IconButton>
                             </ListItemSecondaryAction>

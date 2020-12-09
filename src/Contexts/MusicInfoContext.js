@@ -49,7 +49,7 @@ export function filterByArtist(artist) {
 
 export function filterByAlbum(album) {
   let musicInfo = this.state.musicInfo;
-  let filteredSongs = musicInfo.songs.filter(song => song.songInfo.common.album === album)
+  let filteredSongs = musicInfo.songs.filter(song => song.songInfo.common.album === album.albumName)
   let filteredArtists = filteredSongs.map(song => song.songInfo.common.artist)
   musicInfo.filteredArtists = Array.from(new Set(filteredArtists));
   musicInfo.filteredAlbums = [album];

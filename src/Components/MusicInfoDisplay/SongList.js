@@ -7,9 +7,9 @@ import QueueMusicIcon from '@material-ui/icons/QueueMusic';
 
 const SongList = (props) => {
     return (
-        <div>
+        <div className="flex-control-column">
         <Typography variant="h5">Songs</Typography>
-        <List className="list-group">
+        <List className="list-group" style={{overflow: 'auto'}}>
             <CurrentlyPlayingContext.Consumer>
             {({setCurrentlyPlaying, addSongToPlayList}) => (
                 <MusicInfoContext.Consumer>
